@@ -119,40 +119,6 @@ repos["ghauri"]="r0oth3x49/ghauri"
 repos["gitleaks"]="gitleaks/gitleaks"
 repos["trufflehog"]="trufflesecurity/trufflehog"
 
-
-install_webserver(){
-    printf "${bblue} Running: Installing web reconftw ${reset}\n\n"
-
-    printf "${yellow} Installing python libraries...${reset}\n\n"
-    
-    # Install venv
-    printf "${yellow} python virtualenv install...${reset}\n\n"
-    $SUDO rm -rf /web/.venv/
-    $SUDO pip3 install virtualenv &>/dev/null
-    $SUDO virtualenv web/.venv/ &>/dev/null
-    if [ $? -eq 0 ]; then
-        printf "${yellow} Activating virtualenv...${reset}\n\n" 
-        $SUDO source web/.venv/bin/activate
-        $SUDO pip3 install --upgrade pip &>/dev/null
-    else
-        printf '[ERROR] Failed to create virtualenv. Please install requirements mentioned in Documentation.'
-        exit 1
-    fi
-
-    printf "${yellow} Installing Requirements...${reset}\n\n"
-    $SUDO pip3 install -r $SCRIPTPATH/web/requirements.txt &>/dev/null
-        
-    printf "${yellow} Installing tools...${reset}\n\n"
-    $SUDO apt install redis-server -y &>/dev/null
-    
-    printf "${yellow} Creating WEB User...${reset}\n\n"
-    $SUDO rm $SCRIPTPATH/web/db.sqlite3 &>/dev/null
-    $SUDO python3 $SCRIPTPATH/web/manage.py makemigrations &>/dev/null
-    $SUDO python3 $SCRIPTPATH/web/manage.py migrate &>/dev/null
-    $SUDO python3 $SCRIPTPATH/web/manage.py createsuperuser
-    printf "\n\n"
-}
-
 printf "\n${bgreen} reconFTW installer/updater script ${reset}\n\n"
 
 if [[ -d $dir && -d ~/.gf && -d ~/.config/notify/ && -d ~/.config/amass/ && -d ~/.config/nuclei/ && -f $dir/.github_tokens ]]; then
