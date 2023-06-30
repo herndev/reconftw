@@ -120,23 +120,6 @@ repos["gitleaks"]="gitleaks/gitleaks"
 repos["trufflehog"]="trufflesecurity/trufflehog"
 
 
-function banner_web(){
-    echo -en "\033c"
-	printf "\n${bgreen}"
-	printf "  ██▀███  ▓█████  ▄████▄   ▒█████   ███▄    █   █████▒▄▄▄█████▓ █     █░\n"
-	printf " ▓██ ▒ ██▒▓█   ▀ ▒██▀ ▀█  ▒██▒  ██▒ ██ ▀█   █ ▓██   ▒ ▓  ██▒ ▓▒▓█░ █ ░█░\n"
-	printf " ▓██ ░▄█ ▒▒███   ▒▓█    ▄ ▒██░  ██▒▓██  ▀█ ██▒▒████ ░ ▒ ▓██░ ▒░▒█░ █ ░█ \n"
-	printf " ▒██▀▀█▄  ▒▓█  ▄ ▒▓▓▄ ▄██▒▒██   ██░▓██▒  ▐▌██▒░▓█▒  ░ ░ ▓██▓ ░ ░█░ █ ░█ \n"
-	printf " ░██▓ ▒██▒░▒████▒▒ ▓███▀ ░░ ████▓▒░▒██░   ▓██░░▒█░      ▒██▒ ░ ░░██▒██▓ \n"
-	printf " ░ ▒▓ ░▒▓░░░ ▒░ ░░ ░▒ ▒  ░░ ▒░▒░▒░ ░ ▒░   ▒ ▒  ▒ ░      ▒ ░░   ░ ▓░▒ ▒  \n"
-	printf "   ░▒ ░ ▒░ ░ ░  ░  ░  ▒     ░ ▒ ▒░ ░ ░░   ░ ▒░ ░          ░      ▒ ░ ░  \n"
-	printf "   ░░   ░    ░   ░        ░ ░ ░ ▒     ░   ░ ░  ░ ░      ░        ░   ░  \n"
-	printf "    ░        ░  ░░ ░          ░ ░           ░                      ░    \n"
-	printf "                 ░                                                      \n"
-        printf " ${reconftw_version}                                         by @six2dez\n"
-}
-
-
 install_webserver(){
     printf "${bblue} Running: Installing web reconftw ${reset}\n\n"
 
@@ -170,84 +153,13 @@ install_webserver(){
     printf "\n\n"
 }
 
-
-banner_web
 printf "\n${bgreen} reconFTW installer/updater script ${reset}\n\n"
-
 
 if [[ -d $dir && -d ~/.gf && -d ~/.config/notify/ && -d ~/.config/amass/ && -d ~/.config/nuclei/ && -f $dir/.github_tokens ]]; then
     rftw_installed=true
 else 
     rftw_installed=false
 fi
-
-
-# Display menu and wait for user input
-while true; do
-    printf "${bblue} Choose one of the following options: ${reset}\n\n"
-
-    if $rftw_installed; then
-        printf "${bblue} 1. Install/Update ReconFTW (without Web Interface)${reset}\n\n"
-        printf "${bblue} 2. Install/Update ReconFTW + Install Web Interface${reset}\n\n"
-        printf "${bblue} 3. Setup Web Interface${reset} ${yellow}(User Interaction needed!)${reset}\n\n"
-        printf "${bblue} 4. Exit${reset}\n\n"
-        printf "${bgreen}#######################################################################${reset}\n\n"
-        read -p "$(echo -e ${bblue} "Insert option: "${reset})" option
-        printf "\n\n${bgreen}#######################################################################${reset}\n\n"
-
-        case $option in
-            1)
-                web=false
-                break
-                ;;
-            2)
-                web=true
-                break
-                ;;
-            3)
-                install_webserver
-                exit 1
-                ;;
-            4)
-                printf "${bblue} Exiting...${reset}\n\n"
-                exit 1
-                ;;
-            *)
-                printf "${bblue} Invalid option. Exiting...${reset}\n\n"
-                exit 1
-                ;;
-        esac
-
-    else
-        printf "${bblue} 1. Install/Update ReconFTW${reset}\n\n"
-        printf "${bblue} 2. Install/Update ReconFTW + Install Web Interface${reset} ${yellow}(User Interaction needed!)${reset}\n\n"
-        printf "${bred} 3. Can't setup Web Interface without ReconFTW${reset}\n\n"
-        printf "${bblue} 4. Exit${reset}\n\n"
-        printf "${bgreen}#######################################################################${reset}\n\n"
-        read -p "$(echo -e ${bblue} "Insert option: "${reset})" option
-        printf "\n${bgreen}#######################################################################${reset}\n\n"
-
-        case $option in
-            1)
-                web=false
-                break
-                ;;
-            2)
-                web=true
-                break
-                ;;
-            4)
-                printf "${bblue} Exiting...${reset}\n\n"
-                exit 1
-                ;;
-            *)
-                printf "${bblue} Invalid option. Exiting...${reset}\n\n"
-                exit 1
-                ;;
-        esac
-    fi    
-done
-
 
 printf "${yellow} This may take time. So, go grab a coffee! ${reset}\n\n"
 
